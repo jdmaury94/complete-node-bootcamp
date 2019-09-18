@@ -59,8 +59,10 @@ const tempProduct = fs.readFileSync(`${__dirname}/templates/template-product.htm
 const dataObj = JSON.parse(data);
 //console.log(dataObj)
 const server = http.createServer((req,res) => {
-    const pathName = req.url;
-    if(pathName === '/overview' || pathName === '/'){
+  
+    const {query,pathname} = url.parse(req.url,true);
+    //const pathName = req.url;
+    if(pathname === '/overview' || pathname === '/'){
 
         res.writeHead(200, {'Content-type':'text-html'});
 
@@ -69,9 +71,12 @@ const server = http.createServer((req,res) => {
 
         res.end(output);
 
-    }else if (pathName === '/product'){
-        res.end('This is the PRODUCT!')
-    }else if(pathName === '/api'){
+    }else if (pathname === '/product'){
+        const product = dataObj[query.id];
+        res.writeHead(200, {'Content-type':'text-html'});
+        const output = replaceTemplate(tempProduct,product);
+        res.end(output);
+    }else if(pathname === '/api'){
         res.writeHead(200,{'Content-type':'application/json'})
         res.end(data);
     }
