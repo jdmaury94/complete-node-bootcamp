@@ -10,7 +10,7 @@ server.on("request", (req, res) => {
     }
   }); */
   //Solution 2: Streams
-  /*   const readable = fs.createReadStream("./testd-file.txt");
+  /*   const readable = fs.createReadStream("./test-file.txt");
   readable.on("data", chunk => {
     res.write(chunk);
   });
@@ -27,7 +27,7 @@ server.on("request", (req, res) => {
   //Solution 3: Pipe operator
   const readable = fs.createReadStream("./test-file.txt");
   readable.pipe(res);
-  // readableSource.pipe(writeableDest)
+  // readableSource.pipe(writeableDestination)
 });
 
 server.listen(8000, "127.0.0.1");
