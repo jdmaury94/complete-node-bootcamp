@@ -41,3 +41,10 @@ server.on("close", (req, res) => {
 server.listen(8000, "127.0.0.1", () => {
   console.log("Waiting for requests...");
 });
+
+/* myEmitter.on("holaMundo", (dd, aa) => {
+  console.log("aja mi vale " + dd);
+});
+
+myEmitter.emit("holaMundo", ["aa", 22]);
+ */
