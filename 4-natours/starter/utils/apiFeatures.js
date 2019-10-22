@@ -9,15 +9,20 @@ class APIFeatures {
   filter() {
     // eslint-disable-next-line node/no-unsupported-features/es-syntax
     const queryObj = { ...this.queryString };
+    ////Using destructuring to make a hard copy of the req.query object
+    //This is to avoid modifying the original req.query
+    //queryObj = { duration: '5', difficulty: 'easy' }
+
     const excludedFields = ['page', 'sort', 'limit', 'fields'];
     excludedFields.forEach(el => delete queryObj[el]);
 
     //1B) Advanced filtering
-    let queryStr = JSON.stringify(queryObj);
+    let queryStr = JSON.stringify(queryObj); //Here we convert query object to string to perform replacements in line 20, in line 22 we convert it back to JSON
+
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt\b)/g, match => `$${match}`);
     //console.log(JSON.parse(queryStr));
     this.query = this.query.find(JSON.parse(queryStr));
-
+    //this.query = Tours.find().find(JSON.parse(queryStr)
     return this;
 
     //let query = Tour.find(JSON.parse(queryStr));

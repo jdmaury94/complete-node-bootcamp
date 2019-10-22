@@ -10,7 +10,7 @@ exports.aliasTopTours = (req, res, next) => {
 
 exports.getAlltours = async (req, res) => {
   try {
-    console.log(req.query);
+    //console.log('req.query ==> ', req.query);
 
     //BUILD QUERY
     //1A) Filtering
@@ -22,7 +22,6 @@ exports.getAlltours = async (req, res) => {
     //1B) Advanced filtering
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt\b)/g, match => `$${match}`);
-    console.log(JSON.parse(queryStr));
 
     let query = Tour.find(JSON.parse(queryStr)); */
 
