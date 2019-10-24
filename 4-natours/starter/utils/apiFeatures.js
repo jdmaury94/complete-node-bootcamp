@@ -17,7 +17,8 @@ class APIFeatures {
     excludedFields.forEach(el => delete queryObj[el]);
 
     //1B) Advanced filtering
-    let queryStr = JSON.stringify(queryObj); //Here we convert query object to string to perform replacements in line 20, in line 22 we convert it back to JSON
+    let queryStr = JSON.stringify(queryObj); //Here we convert query object to string to perform
+    //replacements in line 20, in line 22 we convert it back to JSON
 
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt\b)/g, match => `$${match}`);
     //console.log(JSON.parse(queryStr));
