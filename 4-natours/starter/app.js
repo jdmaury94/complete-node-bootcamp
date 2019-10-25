@@ -11,11 +11,6 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(express.json());
 app.use(express.static(`${__dirname}/public`));
-app.use((req, res, next) => {
-  //Middleware logic
-  console.log('Hello from the middleware 👏');
-  next();
-});
 
 app.use((req, res, next) => {
   req.requestTIme = new Date().toISOString(); //Each time
@@ -27,6 +22,13 @@ app.use((req, res, next) => {
 //3) ROUTES
 app.use('/api/v1/tours', tourRouter); //Apply tourRouter middleware to /api/v1/tours route
 app.use('/api/v1/users', userRouter); //Apply userRouter middleware to /api/v1/users route
+
+app.all('*', (req, res, next) => {
+  res.status(404).json({
+    status: 'fail',
+    message: `Can't find ${req.originalUrl} on this server!`
+  });
+}); //It will run for all the verbs, HTTP methods
 
 //4) START SERVER
 
