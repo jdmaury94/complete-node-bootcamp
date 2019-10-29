@@ -17,6 +17,7 @@ app.use(express.static(`${__dirname}/public`));
 
 app.use((req, res, next) => {
   req.requestTIme = new Date().toISOString(); //Each time
+  //  console.log(req.headers);
   //a request hits the server, this property will be
   //added/updated
   next();
