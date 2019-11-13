@@ -101,6 +101,12 @@ const tourSchema = new mongoose.Schema(
         description: String,
         day: Number
       }
+    ],
+    guides: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User'
+      }
     ]
   },
 
@@ -122,6 +128,13 @@ tourSchema.pre('save', function(next) {
   this.slug = slugify(this.name, { lower: true });
   next();
 });
+
+/*tourSchema.pre('save', async function(next) {
+  //Array full of promises, remember we can await multiple promises
+  const guidesPromises = this.guides.map(async id => await User.findById(id));
+  this.guides = await Promise.all(guidesPromises);
+  next();
+});*/
 
 /* tourSchema.pre('save', function(next) {
   console.log('Will save document...');
@@ -145,6 +158,14 @@ tourSchema.post(/^find/, function(docs, next) {
   //After the query has already executed
   console.log(`Query took ${Date.now() - this.start} milliseconds`);
   //console.log(docs);
+  next();
+});
+
+tourSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'guides',
+    select: '-__v -passwordChangedAt'
+  });
   next();
 });
 
