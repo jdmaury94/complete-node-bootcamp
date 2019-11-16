@@ -24,17 +24,31 @@ router
   .get(tourController.aliasTopTours, tourController.getAlltours);
 
 router.route('/tour-stats').get(tourController.getTourStats);
-router.route('/monthly-plan/:year').get(tourController.getMonthlyPlan); //We expect a year by parameter
+router
+  .route('/monthly-plan/:year')
+  .get(
+    authController.protect,
+    authController.restrictTo('lead-guide', 'admin', 'guide'),
+    tourController.getMonthlyPlan
+  ); //We expect a year by parameter
 
 router
   .route('/')
-  .get(/*authController.protect,*/ tourController.getAlltours)
-  .post(tourController.createTour);
+  .get(tourController.getAlltours)
+  .post(
+    authController.protect,
+    authController.restrictTo('lead-guide', 'admin'),
+    tourController.createTour
+  );
 
 router
   .route('/:id')
   .get(tourController.getTour)
-  .patch(tourController.updateTour)
+  .patch(
+    authController.protect,
+    authController.restrictTo('lead-guide', 'admin'),
+    tourController.updateTour
+  )
   .delete(
     /*authController.protect,
     authController.restrictTo('admin', 'lead-guide'),*/
