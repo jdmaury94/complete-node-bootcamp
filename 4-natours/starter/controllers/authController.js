@@ -113,6 +113,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
   //GRANT ACCESS TO PROTECTED ROUTE
   req.user = currentUser; // It might be useful in the future
+  res.locals.user = currentUser;
   next();
 });
 //Only for rendered pages, no errors!
