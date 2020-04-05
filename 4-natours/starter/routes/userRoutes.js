@@ -2,6 +2,7 @@ const fs = require('fs');
 const userController = require('./../controllers/userController');
 const authController = require('./../controllers/authController');
 
+
 const express = require('express');
 const router = express.Router();
 
@@ -20,7 +21,11 @@ router.get(
   userController.getMe, //To fake that ID is coming actually coming from URL
   userController.getUser
 );
-router.patch('/updateMe', userController.updateMe);
+router.patch(
+  '/updateMe', 
+   userController.uploadUserPhoto,
+   userController.resizeUserPhoto,
+   userController.updateMe);
 router.delete('/deleteMe', userController.deleteMe);
 
 router.use(authController.restrictTo('admin'));
